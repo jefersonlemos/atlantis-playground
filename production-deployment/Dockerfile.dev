@@ -1,0 +1,5 @@
+FROM ghcr.io/runatlantis/atlantis:v0.35.0
+
+# Note: I decided to use a Dockerfile to be already set when it's time to test Terragrunt and other tools
+
+
