@@ -12,4 +12,16 @@ It's very useful when you have a pull request workflow in your company where you
 This is the test I did -> [Atlantis PR](https://github.com/jefersonlemos/atlantis-playground/pull/1)
 
 
+# Running locally
+
+```
+atlantis server \
+--atlantis-url="$URL" \
+--gh-user="$USERNAME" \
+--gh-token="$TOKEN" \
+--gh-webhook-secret="$SECRET" \
+--repo-allowlist="$REPO_ALLOWLIST"
+```
+
+
 
