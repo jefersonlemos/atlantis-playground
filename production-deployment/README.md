@@ -1,6 +1,12 @@
 # Purpose of this POC
 
-I tried to understand how'd Atlantis look like when running in a container environment but I realized that it'd be too much different than a local atlantis server despite the entire microservice world that's completely different
+I tried to understand how'd Atlantis look like when running in a container environment but I realized that it wouldn't be too much different than a local atlantis server despite the entire microservice world that's completely different
+
+So I decided to test the Atlantis workflow that we can speficy the applying order and much more.
+
+## Results
+
+Check the [PR](https://github.com/jefersonlemos/atlantis-playground/pull/3) to see Atlantis working.
 
 # Atlantis DOC
 
