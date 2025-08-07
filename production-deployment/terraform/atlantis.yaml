@@ -11,6 +11,8 @@ projects:
 - name: bucket2
   dir: ./terraform/app2
   workflows: ["poc-app2:apply"]
+  autoplan:
+    enabled: true
   execution_order_group: 2
 workflows:
   poc-app1:
