@@ -1,7 +1,9 @@
 version: 3
 abort_on_execution_order_fail: true
 projects:
-- dir: ./terraform/app1
+- name: bucket1
+  dir: ./terraform/app1
   execution_order_group: 1
-- dir: ./terraform/app2
+- name: bucket2
+  dir: ./terraform/app2
   execution_order_group: 2
