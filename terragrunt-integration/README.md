@@ -1,11 +1,22 @@
 # Purpose of this POC
 
 Use terragrunt along with Atlantis and test its capabilities:
-- TBD
+
+Test terragrunt re-use code capabilities along with Atlantis
+
+## Scenario
+
+There will be 2 apps in dev and prod and a single branch.
+* Every commit in dev will plan and apply automatically.
+* In prod plan will run automtically when a PR is oppened and then the aplly run after approval.
+* In prod there will be a policy preventing resources deletion.
+* The terraform code will create a s3 bucket using a module.
+* The apps will invoke the module using terragrunt
+* Terragrunt will hold important information about the environment (vpc, account, subnets)
 
 ## Results
+TBD
 
-Check the [PR](https://github.com/jefersonlemos/atlantis-playground/pull/3) to see Atlantis working.
 
 # References
 
@@ -24,7 +35,7 @@ https://terragrunt.gruntwork.io/docs/getting-started/quick-start/
 - Edit the atlantis.env file
 - Run `docker-compose up`
 
-# Next
+# Next POCS
 
 - TBD
 
