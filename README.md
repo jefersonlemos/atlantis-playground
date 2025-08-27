@@ -9,7 +9,7 @@ The idea of this POC was to have a minimal understanding of Atlantis.
 2. [production-deployment](./production-deployment/README.md)
 See how it looks like in a container and try some atlantis workflows
 
-3. [Integrate Atlantis with Terragrunt](./terragrun-integration/README.md)
+3. [Integrate Atlantis with Terragrunt](./terragrunt-integration/README.md)
 Apply Terraform using atlantis and terragrunt with some level of dependencies
 
 
