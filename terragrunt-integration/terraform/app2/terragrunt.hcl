@@ -2,10 +2,11 @@ terraform {
   source = "../modules/s3-bucket"
 }
 
-dependency "account_info" {
-  config_path = "../accounts.hcl"
+dependency "aws_config" {
+  config_path   = "../accounts2.hcl"
 }
 
-inputs = {
-  bucket_name    = "atlantis-bucket-app2"
-}
+
+# inputs = {
+#   bucket_name    = "app2-${dependency.aws_config.mock_outputs.bucket_name}"
+# }

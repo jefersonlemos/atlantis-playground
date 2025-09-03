@@ -3,11 +3,10 @@ terraform {
 }
 
 include "aws_config" {
-  path   = "${get_terragrunt_dir()}/../accounts.hcl"
+  path   = "../accounts1.hcl"
   expose = true
 }
 
-
 inputs = {
-  bucket_name    = "atlantis-bucket"
+  bucket_name    = "app1-${include.aws_config.locals.bucket_name}"
 }
