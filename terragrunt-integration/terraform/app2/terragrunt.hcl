@@ -2,11 +2,18 @@ terraform {
   source = "../modules/s3-bucket"
 }
 
-dependency "aws_config" {
-  config_path   = "../accounts2.hcl"
+locals {
+  env_name_hcl = read_terragrunt_config(find_in_parent_folders("commons.hcl"))
+  env_name = local.env_name_hcl.locals.dev.env_name
 }
 
+dependency "commons" {
+  config_path = find_in_parent_folders("commons.hcl")
+  mock_outputs = {
+    base_bucket_name = "base-name"
+  }
+}
 
-# inputs = {
-#   bucket_name    = "app2-${dependency.aws_config.mock_outputs.bucket_name}"
-# }
+inputs = {
+  bucket_name   = "app2-${local.env_name}-${dependency.commons.outputs.base_bucket_name}"
+}
