@@ -5,7 +5,7 @@ projects:
   dir: ["./terraform/app1", "./terraform/app2"]
   branch: "!main"
   autoplan:
-    when_modified: ["*.tf", "../modules/**/*.tf", ".terraform.lock.hcl"]
+    when_modified: ["*.tf", "*.hcl", "../modules/**/*.tf", ".terraform.lock.hcl"]
     enabled: true
   workflows: ["auto-plan:plan","auto-plan:apply"]
 - name: prod_changes_pr_opened
