@@ -1,21 +1,29 @@
 version: 3
 abort_on_execution_order_fail: true
 projects:
-- name: bucket1
-  dir: ./terraform/app1
-  execution_order_group: 1
+- name: dev_changes
+  dir: ["./terraform/app1", "./terraform/app2"]
+  branch: "!main"
   autoplan:
     when_modified: ["*.tf", "../modules/**/*.tf", ".terraform.lock.hcl"]
     enabled: true
-  workflows: ["poc-app1:plan", "poc-app1:apply"]
-- name: bucket2
-  dir: ./terraform/app2
-  workflows: ["poc-app2:apply"]
+  workflows: ["auto-plan:plan","auto-plan:apply"]
+- name: prod_changes_pr_opened
+  dir: ["./terraform/app1", "./terraform/app2"]
+  branch: "main"
+  pr: "opened"
+  workflows: ["auto-plan:plan"]
   autoplan:
     enabled: true
-  execution_order_group: 2
+- name: prod_changes_pr_approved
+  dir: ["./terraform/app1", "./terraform/app2"]
+  branch: "main"
+  pr: "approved"
+  workflows: ["auto-plan:apply"]
+  autoplan:
+    enabled: false
 workflows:
-  poc-app1:
+  auto-plan:
     plan:
       steps:
       - run: 'echo "terraform${ATLANTIS_TERRAFORM_VERSION}"'
@@ -31,8 +39,3 @@ workflows:
       - run:
           command: terragrunt apply -input=false -out=$PLANFILE
           output: strip_refreshing
-  # poc-app2:
-  #   apply:
-  #     steps:
-  #     - run: echo "Applying app2 changes, it applies everytime"
-  #     - apply
