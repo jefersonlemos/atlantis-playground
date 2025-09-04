@@ -1,28 +1,32 @@
 version: 3
 abort_on_execution_order_fail: true
+
 projects:
 - name: dev_changes
   dir: ["./terraform/app1", "./terraform/app2"]
-  branch: "^(?!main$).*"
+  branch: "^(?!main$).*"   # any branch except main
   autoplan:
     when_modified: ["*.tf", "*.hcl", "../modules/**/*.tf", ".terraform.lock.hcl"]
     enabled: true
   automerge: true
-  workflows: ["auto-plan:plan","auto-plan:apply"]
+  workflow: auto-plan       # ✅ only one workflow reference
+
 - name: prod_changes_pr_opened
   dir: ["./terraform/app1", "./terraform/app2"]
   branch: "main"
   pr: "opened"
-  workflows: ["auto-plan:plan"]
+  workflow: auto-plan
   autoplan:
     enabled: true
+
 - name: prod_changes_pr_approved
   dir: ["./terraform/app1", "./terraform/app2"]
   branch: "main"
   pr: "approved"
-  workflows: ["auto-plan:apply"]
+  workflow: auto-plan
   autoplan:
     enabled: false
+
 workflows:
   auto-plan:
     plan:
