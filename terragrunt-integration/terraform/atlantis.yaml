@@ -11,6 +11,10 @@ projects:
   automerge: true
   workflow: plan-all
 
+  #So commitar pra rolar o plan talvez nao role pq o atlantis precisa postar uma msg em algum lugar informando se deu certo o autoplan ou nao
+  # entao talvez eu precise  desabilitar essa msg e ai eu olho no atlants, de algum jeito pra ver se rolou o commit ou faco o atlantis abrir o PR automaticamente
+  # sempre que rolar o commit na feature branch, acho que essa pode ser uma boa alternativa, melhor que a primeira
+
 - name: prod_changes_pr_opened
   dir: ["./terraform"]
   branch: "main"
