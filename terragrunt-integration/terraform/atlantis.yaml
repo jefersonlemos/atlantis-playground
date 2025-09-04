@@ -1,28 +1,42 @@
 version: 3
 abort_on_execution_order_fail: true
+
 projects:
-- name: dev_changes
-  dir: ["./terraform/app1", "./terraform/app2"]
-  branch: "!main"
+- name: apps
+  dir: ["./terraform"]
+  branch: "^(?!main$).*"   # any branch except main
   autoplan:
-    when_modified: ["*.tf", "../modules/**/*.tf", ".terraform.lock.hcl"]
+    when_modified: ["*.tf", "*.hcl", "../modules/**/*.tf", ".terraform.lock.hcl"]
     enabled: true
-  workflows: ["auto-plan:plan","auto-plan:apply"]
+  automerge: true
+  workflow: plan-all
+
 - name: prod_changes_pr_opened
-  dir: ["./terraform/app1", "./terraform/app2"]
+  dir: ["./terraform"]
   branch: "main"
   pr: "opened"
-  workflows: ["auto-plan:plan"]
+  workflow: plan-all
   autoplan:
     enabled: true
+
 - name: prod_changes_pr_approved
-  dir: ["./terraform/app1", "./terraform/app2"]
+  dir: ["./terraform"]
   branch: "main"
   pr: "approved"
-  workflows: ["auto-plan:apply"]
+  workflow: plan-all
   autoplan:
     enabled: false
+
 workflows:
+  plan-all:
+      steps:
+      - run: 'echo "terraform${ATLANTIS_TERRAFORM_VERSION}"'
+      - run:
+          command: echo "Running app1 command hidding output"
+          output: hide
+      - run:
+          command: terragrunt run plan --all
+          output: strip_refreshing  
   auto-plan:
     plan:
       steps:
@@ -31,11 +45,11 @@ workflows:
           command: echo "Running app1 command hidding output"
           output: hide
       - run:
-          command: terragrunt plan -input=false -out=$PLANFILE
+          command: terragrunt run plan --all
           output: strip_refreshing
     apply:
       steps:
       - run: echo "Applying app1 changes"
       - run:
-          command: terragrunt apply -input=false -out=$PLANFILE
+          command: terragrunt apply
           output: strip_refreshing
