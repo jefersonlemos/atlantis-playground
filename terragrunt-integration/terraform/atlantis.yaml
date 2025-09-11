@@ -7,7 +7,7 @@ projects:
   branch: "^(?!main$).*"   # any branch except main
   autoplan:
     when_modified: ["*.tf", "*.hcl", "../modules/**/*.tf", ".terraform.lock.hcl"]
-    enabled: true
+    enabled: false
   automerge: true
   workflow: terragrunt
 
@@ -47,3 +47,7 @@ workflows:
       - run:
           command: terragrunt run plan --all
           output: strip_refreshing
+    apply:
+      steps:
+      - run: echo "####### APPLYING WITH TERRAGRUNT #######"
+      - run: terragrunt run-all apply --terragrunt-non-interactive          
