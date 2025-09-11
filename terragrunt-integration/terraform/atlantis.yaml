@@ -3,7 +3,7 @@ abort_on_execution_order_fail: true
 
 projects:
 - name: apps
-  dir: ["./"]
+  dir: ./terraform
   branch: "^(?!main$).*"   # any branch except main
   autoplan:
     when_modified: ["*.tf", "*.hcl", "../modules/**/*.tf", ".terraform.lock.hcl"]
@@ -16,18 +16,16 @@ projects:
   # sempre que rolar o commit na feature branch, acho que essa pode ser uma boa alternativa, melhor que a primeira
 
 - name: prod_changes_pr_opened
-  dir: ["./"]
+  dir: ./terraform
   branch: "main"
-  workdir: "./terraform"
   pr: "opened"
   workflow: terragrunt
   autoplan:
     enabled: true
 
 - name: prod_changes_pr_approved
-  dir: ["./"]
+  dir: ./terraform
   branch: "main"
-  workdir: "./terraform"
   pr: "approved"
   workflow: terragrunt
   autoplan:
@@ -35,6 +33,7 @@ projects:
 
 workflows:
   terragrunt:
+    plan:
       steps:
       - env:
           name: TERRAGRUNT_TFPATH
