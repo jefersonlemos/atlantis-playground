@@ -35,6 +35,8 @@ workflows:
   terragrunt:
     plan:
       steps:
+      - run: echo "####### PLANNING APP1 CHANGES #######"
+      - run: pwd
       - env:
           name: TERRAGRUNT_TFPATH
           command: 'echo "terraform${ATLANTIS_TERRAFORM_VERSION}"'
@@ -44,23 +46,4 @@ workflows:
           value: 'true'
       - run:
           command: terragrunt run plan --all
-          output: strip_refreshing
-  auto-plan:
-    plan:
-      steps:
-      - env:
-          name: TERRAGRUNT_TFPATH
-          command: 'echo "terraform${ATLANTIS_TERRAFORM_VERSION}"'
-      - env:
-          # Reduce Terraform suggestion output
-          name: TF_IN_AUTOMATION
-          value: 'true'      
-      - run:
-          command: terragrunt run plan --all
-          output: strip_refreshing  
-    apply:
-      steps:
-      - run: echo "Applying app1 changes"
-      - run:
-          command: terragrunt apply
           output: strip_refreshing
