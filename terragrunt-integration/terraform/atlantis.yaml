@@ -3,11 +3,11 @@ abort_on_execution_order_fail: true
 
 projects:
 - name: apps
-  dir: ["./"]
+  dir: .
   branch: "^(?!main$).*"   # any branch except main
   autoplan:
     when_modified: ["*.tf", "*.hcl", "../modules/**/*.tf", ".terraform.lock.hcl"]
-    enabled: true
+    enabled: false
   automerge: true
   workflow: terragrunt
 
@@ -16,18 +16,16 @@ projects:
   # sempre que rolar o commit na feature branch, acho que essa pode ser uma boa alternativa, melhor que a primeira
 
 - name: prod_changes_pr_opened
-  dir: ["./"]
+  dir: .
   branch: "main"
-  workdir: "./terraform"
   pr: "opened"
   workflow: terragrunt
   autoplan:
-    enabled: true
+    enabled: false
 
 - name: prod_changes_pr_approved
-  dir: ["./"]
+  dir: .
   branch: "main"
-  workdir: "./terraform"
   pr: "approved"
   workflow: terragrunt
   autoplan:
@@ -35,7 +33,10 @@ projects:
 
 workflows:
   terragrunt:
+    plan:
       steps:
+      - run: echo "####### PLANNING APP1 CHANGES #######"
+      - run: pwd
       - env:
           name: TERRAGRUNT_TFPATH
           command: 'echo "terraform${ATLANTIS_TERRAFORM_VERSION}"'
@@ -44,24 +45,9 @@ workflows:
           name: TF_IN_AUTOMATION
           value: 'true'
       - run:
-          command: terragrunt run plan --all
+          command: terragrunt plan
           output: strip_refreshing
-  auto-plan:
-    plan:
-      steps:
-      - env:
-          name: TERRAGRUNT_TFPATH
-          command: 'echo "terraform${ATLANTIS_TERRAFORM_VERSION}"'
-      - env:
-          # Reduce Terraform suggestion output
-          name: TF_IN_AUTOMATION
-          value: 'true'      
-      - run:
-          command: terragrunt run plan --all
-          output: strip_refreshing  
     apply:
       steps:
-      - run: echo "Applying app1 changes"
-      - run:
-          command: terragrunt apply
-          output: strip_refreshing
+      - run: echo "####### APPLYING WITH TERRAGRUNT #######"
+      - run: terragrunt apply
