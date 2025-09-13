@@ -3,7 +3,7 @@ abort_on_execution_order_fail: true
 
 projects:
 - name: apps
-  dir: .
+  dir: /terraform/app1
   branch: "^(?!main$).*"   # any branch except main
   autoplan:
     when_modified: ["*.tf", "*.hcl", "../modules/**/*.tf", ".terraform.lock.hcl"]
