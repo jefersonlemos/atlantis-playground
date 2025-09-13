@@ -5,7 +5,7 @@ projects:
 - name: dev
   dir: terragrunt-integration/terraform
   execution_order_group: 1
-  branch: /^(?!main$).*/
+  branch: /.*/
   autoplan:
     when_modified: ["app1/**/*.hcl","app2/**/*.hcl"]
     enabled: true
