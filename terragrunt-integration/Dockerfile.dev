@@ -4,4 +4,5 @@ COPY ./terragrunt_linux_amd64 /usr/local/bin/terragrunt
 
 # Note: I decided to use a Dockerfile to be already set when it's time to test Terragrunt and other tools
 
+USER atlantis:atlantis
 
