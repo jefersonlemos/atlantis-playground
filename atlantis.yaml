@@ -13,6 +13,16 @@ projects:
   workflow: terragrunt
 
 workflows:
+  dev_workflow:
+    plan:
+      steps:
+      - run: echo ">>>> DEV PLANNING CHANGES <<<<"
+      - env:
+          name: TF_IN_AUTOMATION
+          value: 'true'
+      - run:
+          command: terragrunt run plan --all && echo y | terragrunt apply --all
+          output: strip_refreshing
   terragrunt:
     plan:
       steps:
