@@ -39,9 +39,9 @@ workflows:
           name: TF_IN_AUTOMATION
           value: 'true'
       - run:
-          command: terragrunt plan
+          command: terragrunt run plan --all
           output: strip_refreshing
     apply:
       steps:
       - run: echo ">>>> APPLYING WITH TERRAGRUNT <<<<"
-      - run: terragrunt apply
+      - run: terragrunt run apply --all
