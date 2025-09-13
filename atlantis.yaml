@@ -3,33 +3,19 @@ abort_on_execution_order_fail: true
 automerge: true
 projects:
 - name: apps
-  dir: terragrunt-integration/terraform/app1
+  dir: terragrunt-integration/terraform
   branch: /.*/
   autoplan:
-    when_modified: ["*.tf", "*.hcl", "../modules/**/*.tf", ".terraform.lock.hcl"]
+    when_modified: ["app1/**/*.hcl","app2/**/*.hcl"]
     enabled: true
-  
+  apply_requirements: [mergeable, approved, undiverged] 
   workflow: terragrunt
-
-- name: prod_changes_pr_opened
-  dir: .
-  branch: /main/
-  workflow: terragrunt
-  autoplan:
-    enabled: false
-
-- name: prod_changes_pr_approved
-  dir: .
-  branch: /main/
-  workflow: terragrunt
-  autoplan:
-    enabled: false
 
 workflows:
   terragrunt:
     plan:
       steps:
-      - run: echo ">>>> PLANNING APP1 CHANGES <<<<"
+      - run: echo ">>>> PLANNING CHANGES <<<<"
       - run: pwd
       - env:
           name: TERRAGRUNT_TFPATH
