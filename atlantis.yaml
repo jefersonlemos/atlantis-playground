@@ -29,4 +29,6 @@ workflows:
     apply:
       steps:
       - run: echo ">>>> APPLYING WITH TERRAGRUNT <<<<"
-      - run: terragrunt run apply --all
+      - run:
+          command: terragrunt run apply --all
+          output: strip_refreshing
