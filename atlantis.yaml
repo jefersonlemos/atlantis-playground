@@ -29,7 +29,7 @@ workflows:
   terragrunt:
     plan:
       steps:
-      - run: echo "####### PLANNING APP1 CHANGES #######"
+      - run: echo ">>>> PLANNING APP1 CHANGES <<<<"
       - run: pwd
       - env:
           name: TERRAGRUNT_TFPATH
@@ -43,5 +43,5 @@ workflows:
           output: strip_refreshing
     apply:
       steps:
-      - run: echo "####### APPLYING WITH TERRAGRUNT #######"
+      - run: echo ">>>> APPLYING WITH TERRAGRUNT <<<<"
       - run: terragrunt apply
