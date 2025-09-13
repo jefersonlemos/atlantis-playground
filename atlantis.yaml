@@ -4,7 +4,7 @@ automerge: true
 projects:
 - name: apps
   dir: terragrunt-integration/terraform/app1
-  branch: terragrunt-integration
+  branch: /.*/
   autoplan:
     when_modified: ["*.tf", "*.hcl", "../modules/**/*.tf", ".terraform.lock.hcl"]
     enabled: true
@@ -13,14 +13,14 @@ projects:
 
 - name: prod_changes_pr_opened
   dir: .
-  branch: main
+  branch: /main/
   workflow: terragrunt
   autoplan:
     enabled: false
 
 - name: prod_changes_pr_approved
   dir: .
-  branch: main
+  branch: /main/
   workflow: terragrunt
   autoplan:
     enabled: false
