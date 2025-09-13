@@ -29,4 +29,6 @@ workflows:
     apply:
       steps:
       - run: echo ">>>> APPLYING WITH TERRAGRUNT <<<<"
-      - run: terragrunt run apply --all --auto-approve
+      - run:
+          command: echo y | terragrunt apply --all
+          output: strip_refreshing

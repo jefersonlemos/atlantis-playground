@@ -1,7 +1,7 @@
 
 resource "random_string" "base_bucket_name" {
   length  = 4
-  lower   = true
+  upper   = false
   numeric = false
   special = false
 }
