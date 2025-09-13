@@ -10,6 +10,7 @@ projects:
     when_modified: ["app1/**/*.hcl","app2/**/*.hcl"]
     enabled: true
   apply_requirements: [mergeable, undiverged]
+  silence_pr_comments: ["plan"]
   workflow: dev_workflow
 
 workflows:
