@@ -29,4 +29,4 @@ workflows:
     apply:
       steps:
       - run: echo ">>>> APPLYING WITH TERRAGRUNT <<<<"
-      - run: terragrunt run apply --all -input=false $(printf '%s' $COMMENT_ARGS | sed 's/,/ /g' | tr -d '\\') -no-color -out $PLANFILE
+      - run: terragrunt run apply --all $(printf '%s' $COMMENT_ARGS | sed 's/,/ /g' | tr -d '\\') -no-color -out $PLANFILE
