@@ -3,6 +3,6 @@ repos:
 - id: /.*/
   branch: /.*/
   allow_custom_workflows: true
-  allowed_overrides: [workflow]
+  allowed_overrides: [workflow, apply_requirements]
 
   

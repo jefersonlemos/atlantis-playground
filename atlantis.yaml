@@ -2,12 +2,14 @@ version: 3
 abort_on_execution_order_fail: true
 automerge: true
 projects:
-- name: apps
+- name: dev
   dir: terragrunt-integration/terraform
-  branch: /.*/
+  execution_order_group: 1
+  branch: /^(?!main$).*/
   autoplan:
     when_modified: ["app1/**/*.hcl","app2/**/*.hcl"]
     enabled: true
+  apply_requirements: [mergeable, undiverged]
   workflow: terragrunt
 
 workflows:
