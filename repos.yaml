@@ -1,0 +1,5 @@
+# repos lists the config for specific repos.
+repos:
+  allowed_overrides: [workflow]
+
+  
