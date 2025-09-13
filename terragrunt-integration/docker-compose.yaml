@@ -6,39 +6,27 @@ services:
     command:
       - "http"
       - "atlantis:4141"
-    env_file:
-      - ./atlantis.env
+    env_file: "atlantis.env"
     depends_on:
       - atlantis
-  # redis:
-  #   image: redis:7.4-alpine@sha256:ee9e8748ace004102a267f7b8265dab2c618317df22507b89d16a8add7154273
-  #   restart: always
-  #   ports:
-  #     - 6379:6379
-  #   command: redis-server --save 20 1 --loglevel warning --requirepass test123
-  #   volumes:
-  #     - redis:/data
   atlantis:
-    # depends_on:
-    #   - redis
+    container_name: atlantis
     build:
       context: .
       dockerfile: Dockerfile.dev
     ports:
       - 4141:4141
+    user: "1000:atlantis"
     command: >
       atlantis
       server
-      --atlantis-url=$URL
+      --atlantis-url=$ATLANTIS_URL
+      --repo-config=$ATLANTIS_REPO_CONFIG
       --repo-allowlist=$REPO_ALLOWLIST
       --gh-user=$USERNAME
       --gh-token=$TOKEN
       --gh-webhook-secret=$SECRET
     volumes:
-      - .:/atlantis/src:ro
+      - ../:/home/atlantis
     env_file:
       - ./atlantis.env
-
-# volumes:
-#   redis:
-#     driver: local

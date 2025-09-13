@@ -1,3 +1,6 @@
 *.env
 .terragrunt-cache
 .terraform
+.terraform.d
+.atlantis
+atlantis.env

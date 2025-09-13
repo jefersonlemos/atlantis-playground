@@ -1,0 +1,32 @@
+version: 3
+abort_on_execution_order_fail: true
+automerge: true
+projects:
+- name: apps
+  dir: terragrunt-integration/terraform
+  branch: /.*/
+  autoplan:
+    when_modified: ["app1/**/*.hcl","app2/**/*.hcl"]
+    enabled: true
+  workflow: terragrunt
+
+workflows:
+  terragrunt:
+    plan:
+      steps:
+      - run: echo ">>>> PLANNING CHANGES <<<<"
+      - run: pwd
+      - env:
+          name: TERRAGRUNT_TFPATH
+          command: 'echo "terraform${ATLANTIS_TERRAFORM_VERSION}"'
+      - env:
+          # Reduce Terraform suggestion output
+          name: TF_IN_AUTOMATION
+          value: 'true'
+      - run:
+          command: terragrunt run plan --all
+          output: strip_refreshing
+    apply:
+      steps:
+      - run: echo ">>>> APPLYING WITH TERRAGRUNT <<<<"
+      - run: terragrunt run apply --all --auto-approve

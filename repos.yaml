@@ -1,0 +1,8 @@
+# repos lists the config for specific repos.
+repos:
+- id: /.*/
+  branch: /.*/
+  allow_custom_workflows: true
+  allowed_overrides: [workflow]
+
+  
