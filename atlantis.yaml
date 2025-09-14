@@ -32,7 +32,7 @@ workflows:
           name: TF_IN_AUTOMATION
           value: 'true'
       - run:
-          command: terragrunt run plan --var 'environment=dev' --all && echo y | terragrunt apply --var 'environment=dev' --all
+          command: terragrunt plan --var 'environment=dev' --all && echo y | terragrunt apply --var 'environment=dev' --all
           output: strip_refreshing
   prod_workflow:
     plan:
@@ -41,7 +41,7 @@ workflows:
           name: TF_IN_AUTOMATION
           value: 'true'
       - run:
-          command: terragrunt run plan --var 'environment=prod' --all
+          command: terragrunt plan --var 'environment=prod' --all
           output: strip_refreshing
     apply:
       steps:
