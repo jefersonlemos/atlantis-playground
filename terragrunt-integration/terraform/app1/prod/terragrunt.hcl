@@ -6,7 +6,7 @@ terraform {
 
 locals {
   common_values = read_terragrunt_config(find_in_parent_folders("commons.hcl"))
-  env_name = "${local.common_values}.locals.prod.env_name"
+  env_name = local.common_values.locals.prod.env_name
 }
 
 dependency "commons" {
