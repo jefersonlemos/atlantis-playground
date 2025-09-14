@@ -7,7 +7,7 @@ projects:
   execution_order_group: 1
   branch: /.*/
   autoplan:
-    when_modified: ["app1/**/*.hcl","app2/**/*.hcl"]
+    when_modified: ["app1/dev/*.hcl","app2/dev/*.hcl"]
     enabled: true
   apply_requirements: [mergeable, undiverged]
   silence_pr_comments: ["plan"]
@@ -18,7 +18,7 @@ projects:
   depends_on: [dev]
   branch: /.*/
   autoplan:
-    when_modified: ["app1/**/*.hcl","app2/**/*.hcl"]
+    when_modified: ["app1/prod/*.hcl","app2/prod/*.hcl"]
     enabled: true
   apply_requirements: [approved, mergeable, undiverged]
   workflow: prod_workflow
@@ -32,7 +32,7 @@ workflows:
           name: TF_IN_AUTOMATION
           value: 'true'
       - run:
-          command: terragrunt plan --var 'environment=dev' --all && echo y | terragrunt apply --var 'environment=dev' --all
+          command: terragrunt plan --all && echo y | terragrunt apply  --all
           output: strip_refreshing
   prod_workflow:
     plan:
@@ -41,10 +41,10 @@ workflows:
           name: TF_IN_AUTOMATION
           value: 'true'
       - run:
-          command: terragrunt plan --var 'environment=prod' --all
+          command: terragrunt plan --all
           output: strip_refreshing
     apply:
       steps:
       - run:
-          command: echo y | terragrunt apply --var 'environment=prod' --all
+          command: echo y | terragrunt apply --all
           output: strip_refreshing
