@@ -2,9 +2,14 @@ terraform {
   source = "../modules/s3-bucket"
 }
 
+variable  "environment" {
+  type = string
+  default = ""
+}
+
 locals {
   env_name_hcl = read_terragrunt_config(find_in_parent_folders("commons.hcl"))
-  env_name = local.env_name_hcl.locals.dev.env_name
+  env_name = "local.env_name_hcl.locals.${var.environment}.env_name"
 }
 
 dependency "commons" {
