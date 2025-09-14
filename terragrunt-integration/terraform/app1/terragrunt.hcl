@@ -8,8 +8,9 @@ variable  "environment" {
 }
 
 locals {
+  environment = var.environment
   env_name_hcl = read_terragrunt_config(find_in_parent_folders("commons.hcl"))
-  env_name = "local.${env_name_hcl}.locals.${var.environment}.env_name"
+  env_name = "${local.env_name_hcl}.locals.${local.environment}.env_name"
 }
 
 dependency "commons" {
