@@ -15,5 +15,5 @@ dependency "commons" {
 }
 
 inputs = {
-  bucket_name   = "app2-new-1-${local.env_name}-${dependency.commons.outputs.base_bucket_name}"
+  bucket_name   = "app2-new-2-${local.env_name}-${dependency.commons.outputs.base_bucket_name}"
 }
