@@ -19,7 +19,7 @@ projects:
   branch: /.*/
   autoplan:
     when_modified: ["app1/prod/*.hcl","app2/prod/*.hcl"]
-    enabled: true
+    enabled: false
   apply_requirements: [approved, mergeable, undiverged]
   workflow: prod_workflow
 
