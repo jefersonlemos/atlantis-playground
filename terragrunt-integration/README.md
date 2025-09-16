@@ -7,13 +7,16 @@ Test terragrunt re-use code capabilities along with Atlantis
 ## Scenario
 
 There will be 2 apps in dev and prod and a single branch.
-* Every commit in dev will plan and apply automatically.
-* In prod plan will run automtically when a PR is oppened and then the aplly run after approval.
+* Every PR will plan and apply automatically.
+    * It should do it only if the dev folder is changed, if prod is changed, merging is not possible
+* In prod, plan will run automtically when a PR is oppened and then the aplly run after approval.
 * In prod there will be a policy preventing resources deletion.
 * The terraform code will create a s3 bucket using a module.
 * The apps will invoke the module using terragrunt
 * Terragrunt will hold important information about the environment (vpc, account, subnets)
 
+### Current status
+[X] It plans and applies everytime a new PR is opened
 ## Results
 TBD
 
