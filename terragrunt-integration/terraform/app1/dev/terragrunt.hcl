@@ -1,10 +1,12 @@
 terraform {
-  source = "../modules/s3-bucket"
+  source = "../../modules/s3-bucket"
 }
 
+
+
 locals {
-  env_name_hcl = read_terragrunt_config(find_in_parent_folders("commons.hcl"))
-  env_name = local.env_name_hcl.locals.dev.env_name
+  common_values = read_terragrunt_config(find_in_parent_folders("commons.hcl"))
+  env_name = local.common_values.locals.dev.env_name
 }
 
 dependency "commons" {

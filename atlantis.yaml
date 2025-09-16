@@ -5,32 +5,46 @@ projects:
 - name: dev
   dir: terragrunt-integration/terraform
   execution_order_group: 1
-  branch: /^(?!main$).*/
+  branch: /.*/
   autoplan:
-    when_modified: ["app1/**/*.hcl","app2/**/*.hcl"]
+    when_modified: ["app1/dev/*.hcl","app2/dev/*.hcl"]
     enabled: true
   apply_requirements: [mergeable, undiverged]
-  workflow: terragrunt
+  silence_pr_comments: ["plan"]
+  workflow: dev_workflow
+- name: prod
+  dir: terragrunt-integration/terraform
+  execution_order_group: 2
+  depends_on: [dev]
+  branch: /.*/
+  autoplan:
+    when_modified: ["app1/prod/*.hcl","app2/prod/*.hcl"]
+    enabled: false
+  apply_requirements: [approved, mergeable, undiverged]
+  workflow: prod_workflow
 
 workflows:
-  terragrunt:
+  dev_workflow:
     plan:
       steps:
-      - run: echo ">>>> PLANNING CHANGES <<<<"
-      - run: pwd
+      - run: echo ">>>> DEV PLANNING CHANGES <<<<"
       - env:
-          name: TERRAGRUNT_TFPATH
-          command: 'echo "terraform${ATLANTIS_TERRAFORM_VERSION}"'
-      - env:
-          # Reduce Terraform suggestion output
           name: TF_IN_AUTOMATION
           value: 'true'
       - run:
-          command: terragrunt run plan --all
+          command: terragrunt plan --all && echo y | terragrunt apply  --all
+          output: strip_refreshing
+  prod_workflow:
+    plan:
+      steps:
+      - env:
+          name: TF_IN_AUTOMATION
+          value: 'true'
+      - run:
+          command: terragrunt plan --all
           output: strip_refreshing
     apply:
       steps:
-      - run: echo ">>>> APPLYING WITH TERRAGRUNT <<<<"
       - run:
           command: echo y | terragrunt apply --all
           output: strip_refreshing
