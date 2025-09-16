@@ -18,7 +18,8 @@ There will be 2 apps in dev and prod and a single branch.
 ### Current status
 [X] It plans and applies everytime a new PR is opened
 ## Results
-TBD
+* https://github.com/jefersonlemos/atlantis-playground/pulls
+* https://github.com/jefersonlemos/atlantis-playground/pull/29
 
 
 # References
